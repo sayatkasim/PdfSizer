@@ -1,8 +1,6 @@
 import tkinter
-from fileinput import filename
 from tkinter import filedialog
 from PIL import Image
-from reportlab.lib.testutils import outputfile
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 import os
@@ -13,11 +11,11 @@ selected_input_path = None
 selected_output_path = None
 
 windows = tkinter.Tk()
-windows.title("PDF Sizer")
-windows.geometry("854x450")
+windows.title("🖼️ PDF Sizer - Görsel Boyutlandırıcı")
+windows.geometry("450x220")
 
 fileLabel = tkinter.Label(windows, text="Düzenlenecek Görseli Seçin")
-fileLabel.pack()
+fileLabel.place(x=200, y=55)
 
 def browseFiles():
     global selected_input_path
@@ -28,25 +26,27 @@ def browseFiles():
                                                      ("All files","*.*")))
     # Change label contents
     if selected_input_path:
-        fileLabel.configure(text="File Opened: " + selected_input_path.split("/")[-1])
+        fileLabel.configure(text="Seçildi: " + selected_input_path.split("/")[-1])
     return selected_input_path
 
 filesSelected = tkinter.Button(text="Dosyayı Seçin",command=browseFiles)
-filesSelected.pack()
+filesSelected.place(x=50, y=50)
 
 outLabel = tkinter.Label(windows, text="Kayıt Yapılacak Dosyayı Seçin")
-outLabel.pack()
+outLabel.place(x=200, y=105)
 
 def selectFile():
     global selected_output_path
     selected_output_path = filedialog.askdirectory()
     if selected_output_path:
-        outLabel.configure(text="File Roaded: " + selected_output_path)
+        outLabel.configure(text="Kayıt Dosayası: " + selected_output_path.split("/")[-1])
     return selected_output_path
 
 outputFile = tkinter.Button(text="Kayıt Yeri Seçin",command=selectFile)
-outputFile.pack()
+outputFile.place(x=50, y=100)
 
+appStatus = tkinter.Label(windows, text="")
+appStatus.place(x=110, y=190)
 def pdfSizer():
     global selected_input_path, selected_output_path
     
@@ -93,9 +93,9 @@ def pdfSizer():
             c.showPage()
             c.save()
             
-    tkinter.messagebox.showinfo("Başarılı", "PDF dönüşümü tamamlandı!")
+    appStatus.configure(text="✅ PDF'ler başarıyla oluşturuldu!")
 
 pdfSizeStarter = tkinter.Button(text="PDF Sizer", command=pdfSizer)
-pdfSizeStarter.pack()
+pdfSizeStarter.place(x=175, y=155)
 
 windows.mainloop()
