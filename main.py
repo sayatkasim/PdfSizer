@@ -2,7 +2,7 @@ from PIL import Image
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 import os
-
+from gui import select_images
 from ai import extend_image_to_fit_page
 
 # Boyutlar (inç cinsinden): 8x10, 11x14, 16x20, 18x24, 24x36
@@ -14,8 +14,8 @@ sizes = [
     ("24x36", 24 * inch, 36 * inch)
 ]
 
-input_folder = "/Desktop"   # klasörün adını değiştir
-output_folder = "/Desktop/output"
+input_folder = select_images   # klasörün adını değiştir
+output_folder = "/Users/sayatkasimoglu/Desktop/etsy/7-plane/Image_Set"
 os.makedirs(output_folder, exist_ok=True)
 
 for file in os.listdir(input_folder):
